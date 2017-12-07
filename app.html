@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+	<script src="jquery.js"></script>
+	<script src="jwt.Class.js"></script>
+	<title>Simple JSON Web Token Decoder</title>
+</head>
+<body>
+	<div style="margin:auto; width:650px; text-align:">
+		<center>
+			<h1>Simple JWT Decode</h1>
+			<p>To use, kindly paste the JWT in the below box and you will see the content and a click trigger to actually console log JSON object of the decoded JWT</p>
+			<input type="text" id="inputBox" style="width:500px; padding:5px; border:1px solid #aaa;" placeholder="Paste your JWT here" />
+		</center>
+		<br />
+		<span id="decodedToken"></span>
+	</div>
+	<script>
+	$(document).on("click", "#fetchJSON", function() {
+		var params = $('span#decodedToken').text();
+		var clean = params.replace("{", "");
+		clean = clean.replace("}", "");
+		clean = clean.replace(" ", "");
+		var all = clean.split(',');
+		var data = {};
+		for(i=0; i<all.length; i++) {
+			var fetch = all[i].split(':');
+			var values = fetch.slice(1).join(':');
+			var name = $.trim(fetch[0].replace(" ", ""));
+			data[name] = $.trim(values.replace(/[^a-zA-Z 0-9@.://]+/g,''));
+		}
+		console.log(data);
+	});
+	</script>
+</body>
+</html>
